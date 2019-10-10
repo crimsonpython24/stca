@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block style %}
+<link href="{% static 'css/fsscroller.min.css' %}" rel="stylesheet" />
+<link href="{% static 'css/index.css' %}" rel="stylesheet" />
+<style>
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+
+</style>
+{% endblock style %}
+
+
+{% block content %}
+<div class="full-screen-scroller">
+  <!-- <div class="fss-dotted-scrollspy">
+    <button type="button" class="fss-nav-btn fss-mainview-prev">
+      <i class="fas fa-chevron-up"></i>
+    </button>
+    <a href="#view-1" class="fss-nav-item active"></a>
+    <a href="#view-2" class="fss-nav-item"></a>
+    <button type="button" class="fss-nav-btn fss-mainview-next">
+      <i class="fas fa-chevron-down"></i>
+    </button>
+  </div> -->
+
+  <div fss-anchor="view-1" class="fss-mainview fss-active">
+    <!--Carousel Wrapper-->
+    <div id="carousel-example-1z" class="carousel slide carousel-fade" data-ride="carousel">
+
+      <!--Indicators-->
+      <ol class="carousel-indicators">
+        {% for carousel in carousels %}
+        <li data-target="#myCarousel" 
+            data-slide-to="{{ forloop.counter0 }}" 
+            {% if forloop.couter0 == 0 %}class="active"{% endif %}></li>
+        {% endfor %}
+      </ol>
+      <!--/.Indicators-->
+
+      <!--Slides-->
+      <div class="carousel-inner" role="listbox">
+        {% for carousel in carousels %}
+          <!--First slide-->
+          <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
+            <div class="view" style="background-image: url('{{ carousel.img_path }}'); background-repeat: no-repeat; background-size: cover;">
+
+              <!-- Mask & flexbox options-->
+              <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+
+                <!-- Content -->
+                <div class="text-center white-text mx-5 wow fadeIn">
+                  <h1 class="mb-4">
+                    <strong>{{ carousel.title }}</strong>
+                  </h1>
+
+                  <p>
+                    <strong>{{ carousel.subtitle }}</strong>
+                  </p>
+
+                  <p class="mb-4 d-none d-md-block">
+                    <strong>{{ carousel.text }}</strong>
+                  </p>
+
+                  <a target="_blank" href="https://mdbootstrap.com/education/bootstrap/" class="btn btn-outline-white btn-lg">{{ carousel.btn_text }}
+                    <i class="fas fa-graduation-cap ml-2"></i>
+                  </a>
+                </div>
+                <!-- Content -->
+
+              </div>
+              <!-- Mask & flexbox options-->
+
+            </div>
+          </div>
+          <!--/First slide-->
+        {% endfor %}
+      </div>
+      <!--/.Slides-->
+
+      <!--Controls-->
+      <a class="carousel-control-prev" href="#carousel-example-1z" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carousel-example-1z" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+      <!--/.Controls-->
+
+    </div>
+    <!--/.Carousel Wrapper-->
+  </div>
+
+  <div fss-anchor="view-2" class="fss-mainview fss-active">
+    <div class="container">
+      <!--Carousel Wrapper-->
+      <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel" display="flex">
+        <!--Controls-->
+        <div class="controls-top">
+          <a class="btn-floating" href="#multi-item-example" data-slide="prev"><i class="fas fa-chevron-left"></i></a>
+          <a class="btn-floating" href="#multi-item-example" data-slide="next"><i
+              class="fas fa-chevron-right"></i></a>
+        </div>
+        <!--/.Controls-->
+    
+        <!--Indicators-->
+        <ol class="carousel-indicators">
+          {% for group in notice_group %}
+            <li data-target="#multi-item-example" 
+                data-slide-to="{{ forloop.counter0 }}" 
+                {% if forloop.couter0 == 0 %}class="active"{% endif %}></li>
+          {% endfor %}
+        </ol>
+        <!--/.Indicators-->
+        <!--Slides-->
+        <div class="carousel-inner" role="listbox">
+          {% for group in notice_group %}
+          <!--First slide-->
+          <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
+            {% for notice in group %}
+            <div class="col-md-4">
+              <div class="card mb-2 text-{{ notice.align_type }}">
+                <div class="view overlay {{ notice.hov_eff }}">
+                  <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg" alt="Card image cap">
+                  <a>
+                    <div class="mask {{ notice.hov_eff }}"></div>
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h4 class="card-title">{{ notice.title }}</h4>
+                  <p class="card-text">{{ notice.text }}</p>
+                  <a class="btn {{ notice.btn_style }} {{ notice.btn_type }}">{{ notice.btn_text }}</a>
+                  <p class="card-text">{{ notice.pub_date }}</p>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          <!--/.First slide-->
+          {% endfor %}
+        </div>
+        <!--/.Slides-->
+      
+      </div>
+      <!--/.Carousel Wrapper-->
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+    <!-- SCRIPTS -->
+    <!-- Plugin JavaScript -->
+    <script type="text/javascript" src="{% static 'js/mdb-fsscroller.min.js' %}"></script>
+    <script>
+    $('#carousel-example-1z').carousel();
+    // Animations initialization
+    new WOW().init();
+    $(document).ready(function () {
+      $(".full-screen-scroller").fullScreenScroller();
+    });
+    </script>
+{% endblock js %}

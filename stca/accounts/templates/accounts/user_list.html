@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+{% endblock style %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-3">
+      <img src="/static/media/{{user.avatar}}" style="width: 160px; height: 160px;" class="img-fluid" />
+    </div>
+    <div class="col-md-9">
+      <h4>username: {{ user.username }}</h4>
+      <h4>email: {{ user.email }}</h4>
+      <h4>nickname: {{ user.nickname }}</h4>
+      <h4>avatar: {{ user.avatar }}</h4>
+      <h4>intro: {{ user.text }}</h4>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Material Design Bootstrap</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'jq-pro/css/bootstrap.min.css' %}" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="{% static 'jq-pro/css/mdb.min.css' %}" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <!-- <link href="{% static 'css/style.css' %}" rel="stylesheet"> -->
+  {% block style %}{% endblock style %}
+</head>
+
+{% block body %}<body>{% endblock body %}
+
+  {% block navbar %}
+  <header>
+    <!--Navbar -->
+    {% block nav_style %}<nav class="mb-1 navbar navbar-expand-lg navbar-dark bg-dark fixed-top lighten-1">{% endblock nav_style %}
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-555"
+        aria-controls="navbarSupportedContent-555" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent-555">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'polls:index' %}">Polls</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto align-items-center nav-flex-icons">
+          {% if not user.is_authenticated %}
+          <a href="{% url 'login' %}" class="btn btn-outline-success my-2 mr-2 btn-sm btn-rounded waves-effect">Login</a>
+          <a href="{% url 'signup' %}" class="btn btn-outline-info my-2 btn-sm btn-rounded waves-effect">Signup</a>
+          {% endif %}
+
+          {% if user.is_authenticated %}
+          <li class="nav-item avatar dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {% if user.avatar %}<img src="/static/media/{{user.avatar}}" class="rounded-circle z-depth-0">
+              {% else %} <i class="fas fa-user-slash"></i>{% endif %}
+            </a>
+            <!--Menu-->
+            <div class="dropdown-menu dropdown-dark dropdown-menu-right">
+              <a class="dropdown-item" href="{% url 'profile' user.username %}">Profile</a>
+              <a class="dropdown-item" href="{% url 'user_settings' %}">Settings</a>
+              <a class="dropdown-item" href="{% url 'polls:mypolls' %}">My polls</a>
+              <a class="dropdown-item" href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm btn-rounded waves-effect">Logout</a>
+            </div>
+          </li>
+        {% endif %}
+        </ul>
+      </div>
+    </nav>
+    <!--/.Navbar -->
+  </header>
+
+  
+  {% endblock navbar %}
+  {% block carousel %}{% endblock carousel %}
+  {% block content %}{% endblock content %}
+
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="{% static 'jq-pro/js/jquery-3.4.1.min.js' %}"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="{% static 'jq-pro/js/popper.min.js' %}"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="{% static 'jq-pro/js/bootstrap.min.js' %}"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="{% static 'jq-pro/js/mdb.min.js' %}"></script>
+  {% block js %}{% endblock js %}
+</body>
+
+</html>
