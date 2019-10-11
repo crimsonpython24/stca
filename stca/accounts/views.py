@@ -13,6 +13,7 @@ class LoginViewRedirect(auth_views.LoginView):
     def get_success_url(self):
         return reverse('profile', args=[self.request.user.username])
 
+    template_name = "registration/login2.html"
 
 class SignupView(generic.CreateView):
     model = User
@@ -30,6 +31,12 @@ class ProfileView(generic.ListView):
         context['username'] = self.request.user.username
         return context
 
+class TemplateTestView(generic.TemplateView):
+    template_name = "temp/login.html"
+
+    
+class TemplateTestView2(generic.TemplateView):
+    template_name = "temp/login2.html"
 
 def user_settings(request):
     if request.user.is_authenticated:

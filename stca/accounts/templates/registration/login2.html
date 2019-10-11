@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block style %}
+<style>
+  .main-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    min-width: 500px;
+  }
+  .action-btn-group {
+    padding-bottom: 15%;
+  }
+  .min-height {
+    min-height: 565px; min-width: 538px;
+  }
+</style>
+{% endblock style %}
+
+{% block navbar %}{% endblock navbar %}
+
+{% block content %}
+<ul class="nav nav-tabs md-tabs" id="myTabEx" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active show" id="home-tab-ex" data-toggle="tab" href="#home-ex" role="tab" aria-controls="home-ex"
+      aria-selected="true">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="profile-tab-ex" data-toggle="tab" href="#profile-ex" role="tab" aria-controls="profile-ex"
+      aria-selected="false">Profile</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="contact-tab-ex" data-toggle="tab" href="#contact-ex" role="tab" aria-controls="contact-ex"
+      aria-selected="false">Contact</a>
+  </li>
+</ul>
+<div class="tab-content pt-5" id="myTabContentEx">
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <div class="tab-pane fade active show" id="home-ex" role="tabpanel" aria-labelledby="home-tab-ex">
+      <!-- Panel 1 -->
+      <div class="col-md-4 main-card">
+        <!-- Card -->
+        <div class="card card-cascade narrower min-height">
+          <!-- Card image -->
+          <div class="view view-cascade gradient-card-header blue-gradient">
+            <h5 class="mb-0 pb-3 pt-2">Random site</h5>
+            <!-- Title -->
+            <h2 class="card-header-title">Sign in</h2>
+            <!-- Subtitle -->
+            <h5 class="mb-0 pb-3 pt-2">Use your assicoated account</h5>
+          </div>
+          <!-- Card content -->
+          <div class="card-body card-body-cascade text-center">
+            <!-- Material input -->
+            <div class="md-form">
+              <input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username" class="form-control" aria-describedby="inputValidationEx">
+              <label for="id_username" >Your Name</label>
+              <small id="inputValidationEx" class="form-text text-muted mb-4 text-left">
+                No email recovery possible atm
+              </small>
+            </div>
+            <small class="form-text text-muted mb-4 text-left">You have to login to make adjustments to the website. No guest browing functions are available at this moment.</small>
+            <!-- Card -->
+            <div class="row action-btn-group">
+              <div class="col-md-5"><button type="button" class="btn btn-flat" style="float: left;">Create Account</button></div>
+              <div class="col-md-2"></div>
+              <div class="col-md-5">
+                <a class="nav-link" data-toggle="tab" href="#profile-ex" role="tab">Next</a>
+              </div>
+            </div>
+          </div>
+          <!-- Card footer -->
+          <div class="rounded-bottom mdb-color lighten-3 text-center pt-3">
+            <ul class="list-unstyled list-inline font-small">
+              <div class="row">
+                <div class="col-md-6">
+                  <li class="list-inline-item pr-2 white-text">English (United States)</li>
+                </div>
+                <div class="col-md-6">
+                  <li class="list-inline-item pr-2"><a href="#" class="white-text">Help</a></li>
+                  <li class="list-inline-item pr-2"><a href="#" class="white-text">Privacy</a></li>
+                  <li class="list-inline-item"><a href="#" class="white-text">Terms</a></li>
+                </div>
+              </div>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Panel 1 -->
+    </div>
+    <div class="tab-pane fade" id="profile-ex" role="tabpanel" aria-labelledby="profile-tab-ex">
+      <!-- Panel 2 -->
+      <div class="tab-pane fade in show active" id="panel555" role="tabpanel">
+        <div class="col-md-4 main-card">
+          <!-- Card -->
+          <div class="card card-cascade narrower min-height">
+            <!-- Card image -->
+            <div class="view view-cascade gradient-card-header blue-gradient">
+              <h5 class="mb-0 pb-3 pt-2">Random site</h5>
+              <!-- Title -->
+              <h2 class="card-header-title">Last step?</h2>
+              <!-- Subtitle -->
+              <a data-toggle="tab" href="#home-ex" role="tab"><h5 class="mb-0 pb-3 pt-2 white-text">Change the authenticated email</h5></a>
+            </div>
+            <!-- Card content -->
+            <div class="card-body card-body-cascade text-center">
+              <!-- Material input -->
+              <div class="md-form">
+                <input type="password" name="password" autocomplete="current-password" required id="id_password" class="form-control">
+                <label for="id_password" >Password</label>
+              </div>
+              <!-- Card -->
+              <div class="row action-btn-group">
+                <div class="col-md-6"><button type="button" class="btn btn-flat" style="float: left;">Forgot Password?</button></div>
+                <div class="col-md-1"></div>
+                <div class="col-md-5">
+                  <button class="btn btn-primary btn-rounded" type="submit">Next</button>
+                </div>
+              </div>
+            </div>
+            <!-- Card footer -->
+            <div class="rounded-bottom mdb-color lighten-3 text-center pt-3">
+              <ul class="list-unstyled list-inline font-small">
+                <div class="row">
+                  <div class="col-md-6">
+                    <li class="list-inline-item pr-2 white-text">English (United States)</li>
+                  </div>
+                  <div class="col-md-6">
+                    <li class="list-inline-item pr-2"><a href="#" class="white-text">Help</a></li>
+                    <li class="list-inline-item pr-2"><a href="#" class="white-text">Privacy</a></li>
+                    <li class="list-inline-item"><a href="#" class="white-text">Terms</a></li>
+                  </div>
+                </div>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Panel 2 -->
+    </div>
+  </form>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+  $('#myTab a').on('click', function (e) {
+    e.preventDefault()
+    $('#myTab li:first-child a').tab('show') // Select first tab
+    $('#myTab li:last-child a').tab('show') // Select last tab
+  })
+</script>
+{% endblock js %}
