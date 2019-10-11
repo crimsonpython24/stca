@@ -37,7 +37,13 @@
         </div>
         <div class="col p-1">
         {% if user.is_authenticated %}
-        <a href="{% url 'polls:detail' question.id %}" class="btn btn-primary btn-sm">Vote</a>
+          {% if voted %}
+            <button type="button" class="btn btn-primary btn-lg">
+              <a href="{% url 'polls:detail' question.id %}">Vote</a>
+            </button>
+          {% else %}
+            <button type="button" class="btn btn-primary btn-sm" disabled>Voted</button>
+          {% endif %}
         {% endif %}
         <a href="{% url 'polls:result' question.id %}" class="btn btn-success btn-sm">Result</a>
         </div>

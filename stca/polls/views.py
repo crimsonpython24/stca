@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
+from django.contrib.auth import get_user_model
 
 from .models import Question, Choice, Vote
 
@@ -43,7 +44,6 @@ def vote(request, question_id):
             question = Question.objects.get(pk=question_id)
             if question.state != 'open':
                 raise Http404("Question does not exist")
-
             selected_choice = question.choice_set.get(pk=request.POST['choice'])
         except (KeyError, Choice.DoesNotExist):
             # Redisplay the question voting form.
@@ -51,15 +51,19 @@ def vote(request, question_id):
                 'question': question,
                 'error_message': "You didn't select a choice.",
             })
-            
+        
         else:
-            #selected_choice.votes += 1
-            vote = Vote(question=question, choice=selected_choice, user=request.user)
-            vote.save()
-            # Always return an HttpResponseRedirect after successfully dealing
-            # with POST data. This prevents data from being posted twice if a
-            # user hits the Back button.
-            return HttpResponseRedirect(reverse('polls:result', args=(question.id,)))
+            User = get_user_model()
+            if User.objects.filter(question=question).count() == 0:
+                #selected_choice.votes += 1
+                vote = Vote(question=question, choice=selected_choice, user=request.user)
+                vote.save()
+                # Always return an HttpResponseRedirect after successfully dealing
+                # with POST data. This prevents data from being posted twice if a
+                # user hits the Back button.
+                return HttpResponseRedirect(reverse('polls:result', args=(question.id,)))
+            else:
+              return HttpResponseRedirect(reverse('polls:index', kwargs={'voted': True}))
     else:
         return HttpResponse('Unauthorized', status=401)
 
