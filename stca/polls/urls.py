@@ -12,6 +12,7 @@ urlpatterns = [
     path('mypolls/', views.mypolls, name='mypolls'),
     path('mypolls/create/', views.mypolls_create, name='mypolls-create'),
     path('mypolls/update/<int:question_id>/', views.mypolls_update, name='mypolls-update'),
+    path('mypolls/state/<int:pk>/', views.StateUpdate.as_view(success_url="/polls/mypolls/"), name='mypolls-state'),
     path('mypolls/delete/<int:question_id>/', views.mypolls_delete, name='mypolls-delete'),
     path('mypolls/delete/<int:question_id>/choice/<int:choice_id>/', views.mypolls_delete_choice, name='mypolls-delete-choice'),
 ]

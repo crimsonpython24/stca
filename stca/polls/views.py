@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.contrib.auth import get_user_model
+from django.views.generic.edit import UpdateView
 
 from .models import Question, Choice, Vote
 
@@ -63,7 +64,8 @@ def vote(request, question_id):
                 # user hits the Back button.
                 return HttpResponseRedirect(reverse('polls:result', args=(question.id,)))
             else:
-              return HttpResponseRedirect(reverse('polls:index', kwargs={'voted': True}))
+                context = {'voted': True}
+                return render(request, 'polls/index.html', context)
     else:
         return HttpResponse('Unauthorized', status=401)
 
@@ -71,7 +73,7 @@ def vote(request, question_id):
 def mypolls(request):
     if request.user.is_authenticated:
         questions = Question.objects.filter(user=request.user).order_by('-created')
-        context = {'questions': questions}
+        context = {'questions': questions, 'voted': request.GET.get('voted'),}
         return render(request, 'polls/mypolls.html', context)
 
     return HttpResponse('Unauthorized', status=401)
@@ -159,4 +161,10 @@ def mypolls_delete_choice(request, question_id, choice_id):
   
     return JsonResponse({ 'status': '401', 'msg': 'unauthorized'})
 
+class StateUpdate(UpdateView):
+    model = Question
+    fields = ['state']
+    template_name = 'polls/mypolls-state.html'
 
+    def get_absolute_url(self):
+        return reverse('mypolls')
