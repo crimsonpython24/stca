@@ -3,7 +3,4 @@
 	url = https://github.com/django/django.git
 [submodule "stca/static/jq-pro"]
 	path = stca/static/jq-pro
-	url = https://git.mdbootstrap.com/mdb/jquery/jq-pro.git
-[submodule "stca/django"]
-	path = stca/django
-	url = https://github.com/django/django.git
+	url = https://github.com/warrenwang1027/jq-pro.git
