@@ -106,3 +106,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# static (licensing)
+stca/static/jq-pro

@@ -1,4 +1,14 @@
 asgiref==3.2.2
+astroid==2.3.1
+colorama==0.4.1
 Django==2.2.6
+isort==4.3.21
+lazy-object-proxy==1.4.2
+mccabe==0.6.1
+pylint==2.4.2
 pytz==2019.2
+six==1.12.0
 sqlparse==0.3.0
+wrapt==1.11.2
+
+# added pylint stuffs
