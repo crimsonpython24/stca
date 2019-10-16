@@ -109,3 +109,5 @@ venv.bak/
 
 # static (licensing)
 stca/static/jq-pro
+stca/static/MDB-Plugins_4.8.10
+stca/static/MDB-Pro_4.8.10
