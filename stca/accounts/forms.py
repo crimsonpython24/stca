@@ -12,7 +12,17 @@ class SignUpForm(UserCreationForm):
         fields = ('username', 'email', 'password1', 'password2', )
 
 
-class UserSettingForm(forms.ModelForm):
+class UserNameForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['nickname', 'text', 'avatar']
+        fields = ['nickname']
+
+class UserTextForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['text']
+
+class UserAvatarForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['nickname']
