@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 
 # Create your models here.
 def file_size(value):
-    limit = 300 * 1024  # 300kb
+    limit = 1024 * 1024  # 300kb
     if value.size > limit:
         raise ValidationError('File too large.')
 
