@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block style %}
+<style>
+  .settings-body {
+    padding-top: 5%;
+  }
+  .card-padding-top {
+    padding-top: 2.5%;
+  }
+  .avatar-upload {
+    height: 50%;
+  }
+</style>
+<link rel="stylesheet" href="{% static 'MDB-Plugins_4.8.10/MDB-File-Upload_4.8.10/css/addons/mdb-file-upload.css' %}">
+{% endblock style %}
+
+{% block content %}
+<div class="settings-body container">
+  <h3 class="text-center"><strong>Personal Info</strong></h3>
+  <h5 class="text-center">Basic info, like your name and photo, that you use on this website</h5>
+  <div class="row d-flex justify-content-center card-padding-top">
+    <div class="col-md-9">
+      <!-- Card -->
+      <div class="card card-cascade">
+        <!-- Card image -->
+        <div class="view view-cascade gradient-card-header blue-gradient text-left">
+          <!-- Title -->
+          <h4>Profile</h4>
+          <!-- Subtitle -->
+          <p>Your profile will be visible to any user, but thankfully not your face.</p>
+        </div>
+        <!-- Card content -->
+        <div class="card-body card-body-cascade">
+          <div class="list-group-flush">
+            <form method="post" enctype="multipart/form-data" id="avatarpost">
+              <a class="list-group-item list-group-item-action">
+                <div class="row">
+                  <div class="col-md-3">Photo</div>
+                  <div class="col-md-6">A photo helps personalize your account</div>
+                  <div class="col-md-3">
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="fileAvatar" name="avatar">
+                      <label class="custom-file-label" for="fileAvatar">Choose avatar...</label>
+                      {% csrf_token %}
+                      <button type="submit" id="submit" class="btn btn-default btn-sm">Submit</button>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </form>
+            <a href="{% url 'user_settings_name' %}" class="list-group-item list-group-item-action">
+              <div class="row">
+                <div class="col-md-3">Name</div>
+                <div class="col-md-8">{{ user.username }}</div>
+                <div class="col-md-1 align-items-right"><i class="fas fa-angle-right"></i></div></div>
+            </a>
+            <a href="{% url 'user_settings_text' %}" class="list-group-item list-group-item-action">
+              <div class="row">
+                <div class="col-md-3">Text</div>
+                <div class="col-md-8">{{ user.text }}</div>
+                <div class="col-md-1 align-items-right"><i class="fas fa-angle-right"></i></div></div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- Card -->
+    </div>
+  </div>
+</div>
+{% if form.errors %}
+  {% for field in form %}
+    {% for error in field.errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+  {% endfor %}
+  {% for error in form.non_field_errors %}
+    <div class="alert alert-danger">
+      <strong>{{ error|escape }}</strong>
+    </div>
+  {% endfor %}
+{% endif %}
+{% endblock content %}
+
+{% block js %}
+<script type="text/javascript" src="{% static 'MDB-Plugins_4.8.10/MDB-File-Upload_4.8.10/js/addons/datatables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'MDB-Plugins_4.8.10/MDB-File-Upload_4.8.10/js/addons/mdb-file-upload.min.js' %}"></script>
+
+<script>
+window.onload = function(){
+    var button = document.getElementById('submit');
+    button.form.submit();
+}
+</script>
+{% endblock js %}

@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.views import generic
 
 from .models import User
-from .forms import SignUpForm, UserNameForm, UserTextForm, UserAvatarForm
+from .forms import SignUpForm, UserNameForm, UserTextForm, UserAvatarForm, UserSettingForm
 
 # Create your views here.
 class LoginViewRedirect(auth_views.LoginView):
@@ -56,14 +56,23 @@ def user_settings_name(request):
     else:
       return HttpResponse('Unauthorized', status=401)
 
-class SettingsView(generic.TemplateView):
-    model = User
-    template_name = 'accounts/user_settings2.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['username'] = self.request.user.username
-        return context
+def user_settings(request):
+    if request.user.is_authenticated:
+        if request.method == 'GET':
+            form = UserSettingForm()
+            user = request.user
+            context = { 'user': user, 'form': form }
+            return render(request, 'accounts/user_settings.html', context)
+        elif request.method == 'POST':
+            form = UserSettingForm(request.POST, request.FILES, instance=request.user)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect('/')
+            else:
+                context = { 'user': request.user, 'form': form }
+                return render(request, 'accounts/user_settings.html', context)
+    else:
+      return HttpResponse('Unauthorized', status=401)
 
 def user_settings_text(request):
     if request.user.is_authenticated:
@@ -89,14 +98,14 @@ def user_settings_avatar(request):
             form = UserAvatarForm()
             user = request.user
             context = { 'user': user, 'form': form }
-            return render(request, 'accounts/user_settings2.html', context)
+            return render(request, 'accounts/user_settings_avatar.html', context)
         elif request.method == 'POST':
-            form = UserAvatarForm(request.POST, request.FILES, instance=request.user)
+            form = UserSettingForm(request.POST, request.FILES, instance=request.user)
             if form.is_valid():
                 form.save()
                 return HttpResponseRedirect('/')
-        else:
-            context = { 'user': request.user, 'form': form }
-            return render(request, 'accounts/user_settings_avatar.html', context)
+            else:
+                context = { 'user': request.user, 'form': form }
+                return render(request, 'accounts/user_settings_avatar.html', context)
     else:
       return HttpResponse('Unauthorized', status=401)
